@@ -1,0 +1,162 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+}
+
+const { title = 'Stephano Espinoza Cueva - Software Engineer' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  <meta name="description" content="Portafolio de Stephano Espinoza Cueva - Ingeniero de Software, Frontend Architect y Full Stack Developer especializado en crear experiencias web de alto rendimiento." />
+  <meta name="keywords" content="Software Engineer, Frontend Developer, Full Stack, React, Angular, Vue, Astro, Lima, Perú" />
+  <meta name="author" content="Stephano Espinoza Cueva" />
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content="Ingeniero de Software obsesionado con la optimización y el rendimiento." />
+  <meta property="og:type" content="website" />
+  
+  <title>{title}</title>
+</head>
+<body class="relative bg-dark-bg">
+  <!-- Capa 1: Fondo base (z-0) -->
+  <div class="fixed inset-0 bg-gradient-to-br from-dark-bg via-dark-section to-dark-bg" style="z-index: 0;"></div>
+  
+  <!-- Capa 2: Grid (z-1) -->
+  <div class="fixed inset-0 professional-grid-bg opacity-30 pointer-events-none" style="z-index: 1;"></div>
+  
+  <!-- Capa 3: Partículas (z-2) -->
+  <canvas id="particles-canvas" class="fixed inset-0 pointer-events-none" style="z-index: 2;"></canvas>
+  
+  <!-- Capa 4: Scanline (z-3) -->
+  <div class="scanline" style="z-index: 3;"></div>
+  
+  <!-- Capa 5: Contenido principal (z-10) -->
+  <main class="relative" style="z-index: 10;">
+    <slot />
+  </main>
+
+  <!-- Script para partículas animadas optimizado -->
+  <script>
+    class Particle {
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+      color: string;
+      
+      constructor(canvas: HTMLCanvasElement) {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.color = Math.random() > 0.7 ? '#3B82F6' : '#6B7280';
+      }
+      
+      update(canvas: HTMLCanvasElement) {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        
+        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+      }
+      
+      draw(ctx: CanvasRenderingContext2D) {
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+    
+    function initParticles() {
+      const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement;
+      if (!canvas) return;
+      
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      const particles: Particle[] = [];
+      const particleCount = 80;
+      
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle(canvas));
+      }
+      
+      function animate() {
+        if (!ctx || !canvas) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Dibujar partículas
+        particles.forEach(particle => {
+          particle.update(canvas);
+          particle.draw(ctx);
+        });
+        
+        // Conectar partículas cercanas
+        ctx.strokeStyle = 'rgba(59, 130, 246, 0.08)';
+        ctx.lineWidth = 0.5;
+        
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 120) {
+              ctx.globalAlpha = 1 - (distance / 120);
+              ctx.beginPath();
+              ctx.moveTo(particles[i].x, particles[i].y);
+              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.stroke();
+              ctx.globalAlpha = 1;
+            }
+          }
+        }
+        
+        requestAnimationFrame(animate);
+      }
+      
+      animate();
+      
+      // Redimensionar canvas
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    }
+    
+    initParticles();
+  </script>
+
+  <style>
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) translateX(0);
+      }
+      33% {
+        transform: translateY(-20px) translateX(10px);
+      }
+      66% {
+        transform: translateY(10px) translateX(-10px);
+      }
+    }
+  </style>
+</body>
+</html>

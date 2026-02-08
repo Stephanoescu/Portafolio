@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../components/HeroSection';
+import AboutSection from '../components/AboutSection';
+import SkillsSection from '../components/SkillsSection';
+import ProjectsSection from '../components/ProjectsSection';
+import FooterSection from '../components/FooterSection';
+---
+
+<Layout title="Stephano Espinoza Cueva - Software Engineer | Full Stack Developer">
+  <!-- Hero Section -->
+  <HeroSection client:load />
+  
+  <!-- About Section -->
+  <AboutSection client:load />
+  
+  <!-- Skills Section -->
+  <SkillsSection client:load />
+  
+  <!-- Projects Section -->
+  <ProjectsSection client:load />
+  
+  <!-- Footer & Contact Section -->
+  <FooterSection client:load />
+</Layout>

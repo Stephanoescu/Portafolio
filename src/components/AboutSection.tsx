@@ -30,22 +30,34 @@ const AboutSection = () => {
     '  "name": "Stephano Espinoza Cueva",',
     '  "role": "Software Engineer",',
     '  "location": "Lima, Perú 🇵🇪",',
+    '  "university": "Universidad Peruana De Ciencias Aplicadas",',
+    '  "degree": "Ingeniería de Software - 4 años de estudio",',
     '  "bio": "Ingeniero obsesionado con la optimización,",',
-    '  "passion": "transformando cafeína en código limpio y escalable",',
-    '  "interests": [',
-    '    "Web3 & Blockchain",',
-    '    "IA Generativa",',
-    '    "Arquitectura Frontend",',
-    '    "Performance Engineering"',
+    '  "passion": "transformando ideas en código limpio y escalable",',
+    '  "specialties": [',
+    '    "Frontend Architecture",',
+    '    "Full Stack Development",',
+    '    "Microservices & IoT",',
+    '    "AI Integration"',
     '  ],',
-    '  "funFact": "Optimizo hasta el último byte",',
+    '  "interests": [',
+    '    "Web Performance Optimization",',
+    '    "IA Generativa",',
+    '    "Web3 & Blockchain",',
+    '    "Full Stack Engineering"',
+    '  ],',
+    '  "languages": {',
+    '    "spanish": "Nativo",',
+    '    "english": "Básico"',
+    '  },',
+    '  "funFact": "Ganador 1er Puesto Game Jam UPC 2022 🏆",',
     '  "goal": "Siempre buscando los 60 FPS ⚡",',
     '  "philosophy": "Clean code is not written by following a set of rules.",',
     '  "motto": "Make it work, make it right, make it fast"',
   ];
 
   return (
-    <section id="about" className="relative py-32 px-4 overflow-hidden">
+    <section id="about" className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden">
       {/* Efectos de fondo - z-0 */}
       <div className="absolute inset-0" style={{ zIndex: 0 }}>
         <div className="absolute top-10 left-10 w-72 h-72 bg-accent-blue opacity-5 rounded-full blur-3xl"></div>
@@ -60,7 +72,7 @@ const AboutSection = () => {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <h2 className="text-5xl md:text-6xl font-black mb-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-4">
             <span className="gradient-text">{'<'} ABOUT_ME {'>'}</span>
           </h2>
           <div className="w-32 h-1 bg-gradient-to-r from-accent-blue via-blue-400 to-accent-blue mx-auto"></div>
@@ -148,16 +160,16 @@ const AboutSection = () => {
           <div className="bg-dark-card border-t border-accent-blue/20 px-6 py-3">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-accent-blue">5+</div>
-                <div className="text-xs text-gray-400 font-mono">Años de experiencia</div>
+                <div className="text-2xl font-bold text-accent-blue">4</div>
+                <div className="text-xs text-gray-400 font-mono">Años de estudio</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-accent-green">100+</div>
-                <div className="text-xs text-gray-400 font-mono">Proyectos completados</div>
+                <div className="text-2xl font-bold text-accent-green">6+</div>
+                <div className="text-xs text-gray-400 font-mono">Proyectos destacados</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-accent-blue">∞</div>
-                <div className="text-xs text-gray-400 font-mono">Tazas de café</div>
+                <div className="text-xs text-gray-400 font-mono">Líneas de código</div>
               </div>
               <div>
                 <div className="text-2xl font-bold gradient-text">60 FPS</div>
@@ -172,7 +184,7 @@ const AboutSection = () => {
           {[
             'while(alive) { eat(); sleep(); code(); repeat(); }',
             'const passion = learning + building + optimizing;',
-            'if (coffee === empty) { refill(); code(); }',
+            'if (motivated === true) { code(); innovate(); }',
           ].map((code, index) => (
             <motion.div
               key={index}

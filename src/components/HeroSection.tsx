@@ -9,11 +9,11 @@ const HeroSection = () => {
 
   const roles = [
     '🇵🇪 Ingeniero de Software',
-    'Frontend Architect',
+    'Frontend Lead',
     'Full Stack Developer',
-    'Performance Obsessed',
-    'Web3 Enthusiast',
-    'AI Explorer',
+    'AI Integration Specialist',
+    'Microservices Architect',
+    'Performance Enthusiast',
   ];
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 py-20 pt-24 md:pt-20">
       {/* Efectos de fondo - z-0 */}
       <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 0 }}>
         {/* Círculos brillantes animados */}
@@ -126,7 +126,7 @@ const HeroSection = () => {
         {/* Nombre principal */}
         <motion.h1
           variants={itemVariants}
-          className="text-6xl md:text-8xl lg:text-9xl font-black mb-6 leading-none"
+          className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black mb-6 leading-none"
         >
           <span className="block gradient-text">STEPHANO</span>
           <span className="block text-text-primary mt-2">
@@ -137,7 +137,7 @@ const HeroSection = () => {
 
         {/* Subtítulo con efecto de máquina de escribir */}
         <motion.div variants={itemVariants} className="mb-8">
-          <div className="text-2xl md:text-4xl font-mono h-20 flex items-center justify-center">
+          <div className="text-xl sm:text-2xl md:text-4xl font-mono h-16 sm:h-20 flex items-center justify-center">
             <span className="text-glow text-accent-blue">{text}</span>
             <span className="animate-pulse text-accent-blue ml-1">|</span>
           </div>
@@ -146,9 +146,9 @@ const HeroSection = () => {
         {/* Descripción */}
         <motion.p
           variants={itemVariants}
-          className="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto mb-12 leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-text-secondary max-w-3xl mx-auto mb-12 leading-relaxed px-4"
         >
-          Transformando <span className="text-accent-blue font-semibold">cafeína</span> en{' '}
+          Transformando <span className="text-accent-blue font-semibold">ideas</span> en{' '}
           <span className="text-accent-green font-semibold">código limpio y escalable</span>.
           <br />
           Obsesionado con la optimización y los <span className="text-glow font-mono">60 FPS</span>.

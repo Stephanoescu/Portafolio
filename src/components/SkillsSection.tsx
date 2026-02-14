@@ -47,9 +47,10 @@ const SkillsSection = () => {
       emoji: '🚀',
       skills: [
         { name: 'JavaScript', icon: 'JS', color: '#F7DF1E', level: 95 },
-        { name: 'TypeScript', icon: 'TS', color: '#3178C6', level: 90 },
+        { name: 'TypeScript', icon: 'TS', color: '#3178C6', level: 92 },
         { name: 'Python', icon: 'PY', color: '#3776AB', level: 85 },
-        { name: 'C++', icon: 'C++', color: '#00599C', level: 80 },
+        { name: 'C++', icon: 'C++', color: '#00599C', level: 82 },
+        { name: 'Dart', icon: 'DART', color: '#0175C2', level: 85 },
       ],
     },
     {
@@ -60,7 +61,7 @@ const SkillsSection = () => {
         { name: 'React', icon: '⚛️', color: '#61DAFB', level: 95 },
         { name: 'Angular', icon: 'NG', color: '#DD0031', level: 90 },
         { name: 'Vue', icon: 'VUE', color: '#4FC08D', level: 88 },
-        { name: 'Astro', icon: '🚀', color: '#FF5D01', level: 85 },
+        { name: 'Astro', icon: '🚀', color: '#FF5D01', level: 88 },
         { name: 'HTML5', icon: 'H5', color: '#E34F26', level: 98 },
         { name: 'CSS3', icon: 'C3', color: '#1572B6', level: 95 },
         { name: 'Tailwind', icon: 'TW', color: '#06B6D4', level: 95 },
@@ -68,31 +69,35 @@ const SkillsSection = () => {
       ],
     },
     {
-      title: 'Backend & Mobile',
+      title: 'Backend & Cloud',
       emoji: '🔧',
       skills: [
         { name: 'Node.js', icon: 'NODE', color: '#339933', level: 90 },
-        { name: 'Flutter', icon: 'FL', color: '#02569B', level: 85 },
-        { name: 'Dart', icon: 'DART', color: '#0175C2', level: 85 },
-        { name: 'Android', icon: 'AND', color: '#3DDC84', level: 80 },
-      ],
-    },
-    {
-      title: 'Database & DevOps',
-      emoji: '💾',
-      skills: [
+        { name: 'Express', icon: 'EXP', color: '#000000', level: 88 },
         { name: 'MongoDB', icon: 'MDB', color: '#47A248', level: 88 },
         { name: 'MySQL', icon: 'SQL', color: '#4479A1', level: 85 },
         { name: 'PostgreSQL', icon: 'PG', color: '#4169E1', level: 85 },
-        { name: 'SQL Server', icon: 'MSSQL', color: '#CC2927', level: 80 },
-        { name: 'AWS', icon: 'AWS', color: '#FF9900', level: 82 },
+        { name: 'SQL Server', icon: 'MSSQL', color: '#CC2927', level: 83 },
+        { name: 'AWS', icon: 'AWS', color: '#FF9900', level: 75 },
         { name: 'Docker', icon: '🐳', color: '#2496ED', level: 85 },
+      ],
+    },
+    {
+      title: 'Mobile & Tools',
+      emoji: '📱',
+      skills: [
+        { name: 'Flutter', icon: 'FL', color: '#02569B', level: 85 },
+        { name: 'Android', icon: 'AND', color: '#3DDC84', level: 80 },
+        { name: 'Git/GitHub', icon: '🌿', color: '#F05032', level: 92 },
+        { name: 'VS Code', icon: 'VSC', color: '#007ACC', level: 95 },
+        { name: 'Figma', icon: 'FIG', color: '#F24E1E', level: 82 },
+        { name: 'Postman', icon: 'PM', color: '#FF6C37', level: 88 },
       ],
     },
   ];
 
   return (
-    <section id="skills" className="relative py-32 px-4 overflow-hidden">
+    <section id="skills" className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden">
       {/* Efectos de fondo - z-0 */}
       <div className="absolute inset-0" style={{ zIndex: 0 }}>
         <motion.div
@@ -131,7 +136,7 @@ const SkillsSection = () => {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <h2 className="text-5xl md:text-6xl font-black mb-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-4">
             <span className="gradient-text">ARSENAL TECNOLÓGICO</span>
           </h2>
           <p className="text-xl text-gray-400 font-mono">

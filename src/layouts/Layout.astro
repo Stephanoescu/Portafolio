@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Navbar from '../components/Navbar';
 
 interface Props {
   title?: string;
@@ -38,6 +39,9 @@ const { title = 'Stephano Espinoza Cueva - Software Engineer' } = Astro.props;
   
   <!-- Capa 4: Scanline (z-3) -->
   <div class="scanline" style="z-index: 3;"></div>
+  
+  <!-- Capa 4.5: Navbar (z-50) - se define en el componente -->
+  <Navbar client:load />
   
   <!-- Capa 5: Contenido principal (z-10) -->
   <main class="relative" style="z-index: 10;">

@@ -38,44 +38,68 @@ const ProjectsSection = () => {
     };
   }, []);
 
-  // Proyectos de ejemplo (placeholder)
+  // Proyectos reales del CV
   const projects: Project[] = [
     {
       id: 1,
-      title: 'E-Commerce Platform',
+      title: 'SecretarIA',
       description:
-        'Plataforma de comercio electrónico de alto rendimiento con carrito en tiempo real, pagos integrados y panel de administración.',
-      image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=600&fit=crop',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Stripe', 'AWS'],
-      demoUrl: '#',
+        'Agente IA de Atención al Cliente. Lideré el desarrollo de la arquitectura Frontend diseñando una interfaz intuitiva para la gestión y visualización de conversaciones automatizadas. Integración de LLMs y LangChain con WhatsApp API para orquestar flujos de atención al cliente.',
+      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
+      technologies: ['React', 'TypeScript', 'LangChain', 'WhatsApp API', 'OpenAI'],
       githubUrl: '#',
       featured: true,
     },
     {
       id: 2,
-      title: 'AI Content Generator',
+      title: 'OsitoPolar',
       description:
-        'Generador de contenido impulsado por IA que crea textos optimizados para SEO y redes sociales con procesamiento en tiempo real.',
-      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
-      technologies: ['Next.js', 'TypeScript', 'OpenAI', 'Tailwind', 'Supabase'],
-      demoUrl: '#',
-      githubUrl: '#',
+        'Arquitectura de Microservicios & IoT. Solución tecnológica para la gestión de artefactos de refrigeración inteligente con integración de datos IoT para el monitoreo de temperatura y estado de dispositivos en tiempo real.',
+      image: 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=800&h=600&fit=crop',
+      technologies: ['Microservices', 'IoT', 'Node.js', 'MongoDB', 'Docker'],
+      githubUrl: 'https://github.com/Inteligencia-Artesanal-FunArqui',
       featured: true,
     },
     {
       id: 3,
-      title: 'Real-Time Analytics Dashboard',
+      title: 'VacApp',
       description:
-        'Dashboard interactivo con visualizaciones en tiempo real, procesamiento de Big Data y exportación de informes personalizados.',
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
-      technologies: ['Vue.js', 'D3.js', 'Python', 'PostgreSQL', 'Docker'],
-      demoUrl: '#',
-      githubUrl: '#',
+        'AgroTech & Gestión Ganadera. Aplicación web integral para la digitalización de procesos ganaderos, integrando módulos de IoT para el conteo y geolocalización de ganado en tiempo real. Algoritmos de cálculo de productividad y rendimiento.',
+      image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=600&fit=crop',
+      technologies: ['Vue.js', 'IoT', 'Python', 'PostgreSQL', 'Arduino'],
+      githubUrl: 'https://github.com/1ASI0732-Grupo-3',
+    },
+    {
+      id: 4,
+      title: 'CoboxLogistic',
+      description:
+        'Logística Empresarial. Transformación digital de empresa de transporte, migrando la gestión operativa de cuadernos/Excel a aplicación web robusta. Módulos para seguimiento de flotas, gestión de inventarios y registro de rutas.',
+      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop',
+      technologies: ['Angular', 'Node.js', 'MySQL', 'Express', 'AWS'],
+      githubUrl: 'https://github.com/Cobox-Logistic-OpenSource',
+    },
+    {
+      id: 5,
+      title: 'Diabelife',
+      description:
+        'Plataforma de Salud & Comunidad. Plataforma social y de gestión para pacientes con diabetes, incluyendo feed de publicaciones, sistema de gestión documental para visualización de análisis médicos y módulo de seguimiento nutricional.',
+      image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop',
+      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'PDF.js'],
+      githubUrl: 'https://github.com/upc-pre-202510-si0730-Grupo-Devspros',
+    },
+    {
+      id: 6,
+      title: 'HelpMom',
+      description:
+        'Telemedicina Materna. Aplicación web enfocada en el monitoreo pre y post embarazo. Sistema de chat en tiempo real (Socket.io) para comunicación directa entre pacientes y doctores. Gestión y visualización de recetas médicas digitales.',
+      image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=800&h=600&fit=crop',
+      technologies: ['React', 'Socket.io', 'Node.js', 'MongoDB', 'WebRTC'],
+      githubUrl: 'https://github.com/HelpMom-AppWeb',
     },
   ];
 
   return (
-    <section id="projects" className="relative py-32 px-4 overflow-hidden">
+    <section id="projects" className="relative py-20 sm:py-32 px-4 sm:px-6 overflow-hidden">
       {/* Efectos de fondo - z-0 */}
       <div className="absolute inset-0" style={{ zIndex: 0 }}>
         <motion.div
@@ -96,11 +120,12 @@ const ProjectsSection = () => {
         {/* Título de sección */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <h2 className="text-5xl md:text-6xl font-black mb-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-4">
             <span className="gradient-text">PROYECTOS DESTACADOS</span>
           </h2>
           <p className="text-xl text-gray-400 font-mono">
@@ -115,8 +140,9 @@ const ProjectsSection = () => {
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 50 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               className={`group relative ${
                 project.featured ? 'lg:col-span-2' : ''
               }`}
@@ -124,7 +150,7 @@ const ProjectsSection = () => {
               onMouseLeave={() => setActiveProject(null)}
             >
               {/* Tarjeta de proyecto */}
-              <div className="relative glass rounded-2xl overflow-hidden h-full hover:scale-[1.02] transition-all duration-500">
+              <div className="relative bg-dark-card border border-accent-blue/20 rounded-2xl overflow-hidden h-full hover:scale-[1.02] transition-all duration-500 shadow-xl">
                 {/* Badge de destacado */}
                 {project.featured && (
                   <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-accent-green/20 backdrop-blur-sm text-accent-green text-xs font-mono rounded-full border border-accent-green/50">
@@ -133,7 +159,7 @@ const ProjectsSection = () => {
                 )}
 
                 {/* Imagen del proyecto */}
-                <div className="relative h-64 md:h-80 overflow-hidden">
+                <div className="relative h-64 md:h-80 overflow-hidden bg-dark-card">
                   <motion.div
                     className="w-full h-full bg-cover bg-center"
                     style={{
@@ -147,8 +173,8 @@ const ProjectsSection = () => {
                     transition={{ duration: 0.6 }}
                   />
 
-                  {/* Overlay con gradiente */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-cyber-black via-cyber-black/50 to-transparent opacity-90 group-hover:opacity-80 transition-opacity duration-300"></div>
+                  {/* Overlay con gradiente - más sutil */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-bg/80 via-dark-bg/20 to-transparent"></div>
 
                   {/* Efecto de escaneo en hover */}
                   {activeProject === project.id && (
@@ -225,14 +251,14 @@ const ProjectsSection = () => {
                 </div>
 
                 {/* Contenido del proyecto */}
-                <div className="p-8">
+                <div className="p-8 bg-dark-card border-t border-accent-blue/20">
                   {/* Título */}
-                  <h3 className="text-2xl md:text-3xl font-bold mb-3 group-hover:text-accent-blue transition-colors duration-300">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white group-hover:text-accent-blue transition-colors duration-300">
                     {project.title}
                   </h3>
 
                   {/* Descripción */}
-                  <p className="text-gray-400 mb-6 leading-relaxed">
+                  <p className="text-gray-300 mb-6 leading-relaxed">
                     {project.description}
                   </p>
 
@@ -242,18 +268,12 @@ const ProjectsSection = () => {
                   {/* Tecnologías */}
                   <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, techIndex) => (
-                      <motion.span
+                      <span
                         key={tech}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={isVisible ? { opacity: 1, scale: 1 } : {}}
-                        transition={{
-                          duration: 0.3,
-                          delay: index * 0.2 + techIndex * 0.1,
-                        }}
-                        className="px-3 py-1 bg-dark-card/70 backdrop-blur-sm text-accent-blue text-sm font-mono rounded-full border border-accent-blue/30 hover:border-accent-blue hover:shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-300 cursor-default"
+                        className="px-3 py-1 bg-dark-section text-accent-blue text-sm font-mono rounded-full border border-accent-blue/30 hover:border-accent-blue hover:shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-300 cursor-default"
                       >
                         {tech}
-                      </motion.span>
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -286,16 +306,17 @@ const ProjectsSection = () => {
         {/* Call to action */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
           className="mt-16 text-center"
         >
-          <div className="glass rounded-2xl p-8 inline-block">
-            <p className="text-xl text-gray-400 mb-4 font-mono">
+          <div className="bg-dark-card border border-accent-blue/20 rounded-2xl p-8 inline-block">
+            <p className="text-xl text-gray-300 mb-4 font-mono">
               ¿Quieres ver más proyectos?
             </p>
             <a
-              href="https://github.com"
+              href="https://github.com/Stephanoescu"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 btn-cyber"

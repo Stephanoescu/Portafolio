@@ -126,12 +126,12 @@ const HeroSection = () => {
         {/* Nombre principal */}
         <motion.h1
           variants={itemVariants}
-          className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black mb-6 leading-none"
+          className="text-4xl sm:text-5xl md:text-7xl lg:text-9xl font-black mb-6 leading-tight"
         >
           <span className="block gradient-text">STEPHANO</span>
           <span className="block text-text-primary mt-2">
             ESPINOZA
-            <span className="text-accent-blue ml-4">CUEVA</span>
+            <span className="text-accent-blue ml-2 sm:ml-4">CUEVA</span>
           </span>
         </motion.h1>
 

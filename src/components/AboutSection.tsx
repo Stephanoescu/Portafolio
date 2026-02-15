@@ -52,7 +52,7 @@ const AboutSection = () => {
     '  },',
     '  "funFact": "Ganador 1er Puesto Game Jam UPC 2022 🏆",',
     '  "goal": "Siempre buscando los 60 FPS ⚡",',
-    '  "philosophy": "Clean code is not written by following a set of rules.",',
+    '  "philosophy": "Confusion is part of programming",',
     '  "motto": "Make it work, make it right, make it fast"',
   ];
 

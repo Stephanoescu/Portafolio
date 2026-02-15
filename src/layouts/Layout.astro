@@ -13,7 +13,10 @@ const { title = 'Stephano Espinoza Cueva - Software Engineer' } = Astro.props;
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="generator" content={Astro.generator} />
   <meta name="description" content="Portafolio de Stephano Espinoza Cueva - Ingeniero de Software, Frontend Architect y Full Stack Developer especializado en crear experiencias web de alto rendimiento." />
@@ -97,7 +100,7 @@ const { title = 'Stephano Espinoza Cueva - Software Engineer' } = Astro.props;
       canvas.height = window.innerHeight;
       
       const particles: Particle[] = [];
-      const particleCount = 80;
+      const particleCount = window.innerWidth < 768 ? 30 : 80;
       
       for (let i = 0; i < particleCount; i++) {
         particles.push(new Particle(canvas));

@@ -154,10 +154,20 @@ const HeroSection = () => {
           Obsesionado con la optimización y los <span className="text-glow font-mono">60 FPS</span>.
         </motion.p>
 
-        {/* Cubo 3D interactivo */}
+        {/* Icono simple para móvil */}
         <motion.div
           variants={itemVariants}
-          className="mb-12 flex justify-center"
+          className="mb-12 flex sm:hidden justify-center"
+        >
+          <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-accent-blue to-blue-600 flex items-center justify-center text-5xl font-bold text-white shadow-lg shadow-accent-blue/30">
+            {'</>'}
+          </div>
+        </motion.div>
+
+        {/* Cubo 3D interactivo - Oculto en móvil para mejor rendimiento */}
+        <motion.div
+          variants={itemVariants}
+          className="mb-12 hidden sm:flex justify-center"
         >
           <div className="relative w-32 h-32 perspective-1000">
             <motion.div
@@ -167,7 +177,7 @@ const HeroSection = () => {
                 rotateY: [0, 360],
               }}
               transition={{
-                duration: 20,
+                duration: 25,
                 repeat: Infinity,
                 ease: 'linear',
               }}

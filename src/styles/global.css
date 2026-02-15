@@ -13,11 +13,15 @@
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
   }
   
   /* Prevenir scroll horizontal */
@@ -284,5 +288,37 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #60A5FA, #3B82F6);
+  }
+
+  /* Optimización de rendimiento para dispositivos móviles */
+  @media (max-width: 768px) {
+    /* Reducir animaciones en móvil */
+    .text-glow {
+      text-shadow: 0 0 5px rgba(59, 130, 246, 0.2);
+    }
+    
+    /* Simplificar efectos de blur */
+    .glass {
+      backdrop-filter: blur(5px);
+    }
+  }
+
+  /* Reducir animaciones para dispositivos de baja potencia */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Optimizar hardware acceleration */
+  .glass,
+  .neon-border,
+  .btn-cyber {
+    transform: translateZ(0);
+    will-change: transform;
   }
 }

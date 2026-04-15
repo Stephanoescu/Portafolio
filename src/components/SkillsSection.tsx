@@ -317,7 +317,7 @@ const SkillsSection = () => {
               </div>
 
               {/* Marcador de categoría destacada */}
-              {category.highlight && (
+              {category.highlight && category.title !== 'Arquitectura & Integraciones' && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={isVisible ? { opacity: 1 } : {}}

@@ -40,60 +40,51 @@ const ProjectsSection = () => {
 
   // Proyectos reales del CV
   const projects: Project[] = [
+
     {
       id: 1,
-      title: 'SecretarIA',
-      description:
-        'Agente IA de Atención al Cliente. Lideré el desarrollo de la arquitectura Frontend diseñando una interfaz intuitiva para la gestión y visualización de conversaciones automatizadas. Integración de LLMs y LangChain con WhatsApp API para orquestar flujos de atención al cliente.',
-      image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop',
-      technologies: ['React', 'TypeScript', 'LangChain', 'WhatsApp API', 'OpenAI'],
-      githubUrl: '#',
-      featured: true,
-    },
-    {
-      id: 2,
       title: 'OsitoPolar',
       description:
         'Arquitectura de Microservicios & IoT. Solución tecnológica para la gestión de artefactos de refrigeración inteligente con integración de datos IoT para el monitoreo de temperatura y estado de dispositivos en tiempo real.',
       image: 'https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=800&h=600&fit=crop',
-      technologies: ['Microservices', 'IoT', 'Node.js', 'MongoDB', 'Docker'],
+      technologies: ['C#', 'Angular', 'Microservicios'],
       githubUrl: 'https://github.com/Inteligencia-Artesanal-FunArqui',
       featured: true,
     },
     {
-      id: 3,
+      id: 2,
       title: 'VacApp',
       description:
         'AgroTech & Gestión Ganadera. Aplicación web integral para la digitalización de procesos ganaderos, integrando módulos de IoT para el conteo y geolocalización de ganado en tiempo real. Algoritmos de cálculo de productividad y rendimiento.',
       image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&h=600&fit=crop',
-      technologies: ['Vue.js', 'IoT', 'Python', 'PostgreSQL', 'Arduino'],
+      technologies: ['C#', 'Dart', 'TypeScript', 'Vue'],
       githubUrl: 'https://github.com/1ASI0732-Grupo-3',
     },
     {
-      id: 4,
+      id: 3,
       title: 'CoboxLogistic',
       description:
         'Logística Empresarial. Transformación digital de empresa de transporte, migrando la gestión operativa de cuadernos/Excel a aplicación web robusta. Módulos para seguimiento de flotas, gestión de inventarios y registro de rutas.',
       image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&h=600&fit=crop',
-      technologies: ['Angular', 'Node.js', 'MySQL', 'Express', 'AWS'],
+      technologies: ['HTML', 'Java', 'Angular', 'TypeScript'],
       githubUrl: 'https://github.com/Cobox-Logistic-OpenSource',
     },
     {
-      id: 5,
+      id: 4,
       title: 'Diabelife',
       description:
         'Plataforma de Salud & Comunidad. Plataforma social y de gestión para pacientes con diabetes, incluyendo feed de publicaciones, sistema de gestión documental para visualización de análisis médicos y módulo de seguimiento nutricional.',
       image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'PDF.js'],
+      technologies: ['JavaScript', 'Vue', 'C#', 'HTML'],
       githubUrl: 'https://github.com/upc-pre-202510-si0730-Grupo-Devspros',
     },
     {
-      id: 6,
+      id: 5,
       title: 'HelpMom',
       description:
         'Telemedicina Materna. Aplicación web enfocada en el monitoreo pre y post embarazo. Sistema de chat en tiempo real (Socket.io) para comunicación directa entre pacientes y doctores. Gestión y visualización de recetas médicas digitales.',
       image: 'https://images.unsplash.com/photo-1584515933487-779824d29309?w=800&h=600&fit=crop',
-      technologies: ['React', 'Socket.io', 'Node.js', 'MongoDB', 'WebRTC'],
+      technologies: ['C#', 'HTML', 'Vue', 'JavaScript'],
       githubUrl: 'https://github.com/HelpMom-AppWeb',
     },
   ];

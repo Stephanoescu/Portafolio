@@ -43,28 +43,29 @@ const SkillsSection = () => {
 
   const skillCategories: SkillCategory[] = [
     {
-      title: 'Core & Lenguajes',
+      title: 'Lenguajes',
       emoji: '🚀',
       skills: [
         { name: 'JavaScript', icon: 'JS', color: '#F7DF1E', level: 95 },
         { name: 'TypeScript', icon: 'TS', color: '#3178C6', level: 92 },
         { name: 'Python', icon: 'PY', color: '#3776AB', level: 85 },
         { name: 'C++', icon: 'C++', color: '#00599C', level: 82 },
+        { name: 'C#', icon: 'C#', color: '#239120', level: 80 },
         { name: 'Dart', icon: 'DART', color: '#0175C2', level: 85 },
       ],
     },
     {
-      title: 'Frontend Mastery',
+      title: 'Frontend',
       emoji: '💎',
       highlight: true,
       skills: [
-        { name: 'React', icon: '⚛️', color: '#61DAFB', level: 95 },
+        { name: 'React.js', icon: '⚛️', color: '#61DAFB', level: 95 },
         { name: 'Angular', icon: 'NG', color: '#DD0031', level: 90 },
-        { name: 'Vue', icon: 'VUE', color: '#4FC08D', level: 88 },
+        { name: 'Vue.js', icon: 'VUE', color: '#4FC08D', level: 88 },
         { name: 'Astro', icon: '🚀', color: '#FF5D01', level: 88 },
         { name: 'HTML5', icon: 'H5', color: '#E34F26', level: 98 },
         { name: 'CSS3', icon: 'C3', color: '#1572B6', level: 95 },
-        { name: 'Tailwind', icon: 'TW', color: '#06B6D4', level: 95 },
+        { name: 'Tailwind CSS', icon: 'TW', color: '#06B6D4', level: 95 },
         { name: 'Bootstrap', icon: 'BS', color: '#7952B3', level: 90 },
       ],
     },
@@ -78,20 +79,56 @@ const SkillsSection = () => {
         { name: 'MySQL', icon: 'SQL', color: '#4479A1', level: 85 },
         { name: 'PostgreSQL', icon: 'PG', color: '#4169E1', level: 85 },
         { name: 'SQL Server', icon: 'MSSQL', color: '#CC2927', level: 83 },
-        { name: 'AWS', icon: 'AWS', color: '#FF9900', level: 75 },
+        { name: 'AWS (Básico)', icon: 'AWS', color: '#FF9900', level: 75 },
         { name: 'Docker', icon: '🐳', color: '#2496ED', level: 85 },
       ],
     },
     {
-      title: 'Mobile & Tools',
+      title: 'Móvil',
       emoji: '📱',
       skills: [
         { name: 'Flutter', icon: 'FL', color: '#02569B', level: 85 },
-        { name: 'Android', icon: 'AND', color: '#3DDC84', level: 80 },
+        { name: 'Android (Kotlin/Java)', icon: 'AND', color: '#3DDC84', level: 80 },
+      ],
+    },
+    {
+      title: 'Herramientas',
+      emoji: '🛠️',
+      skills: [
         { name: 'Git/GitHub', icon: '🌿', color: '#F05032', level: 92 },
         { name: 'VS Code', icon: 'VSC', color: '#007ACC', level: 95 },
+        { name: 'Antigravity', icon: 'AG', color: '#6366F1', level: 90 },
         { name: 'Figma', icon: 'FIG', color: '#F24E1E', level: 82 },
         { name: 'Postman', icon: 'PM', color: '#FF6C37', level: 88 },
+      ],
+    },
+    {
+      title: 'Idiomas',
+      emoji: '🌍',
+      skills: [
+        { name: 'Español (Nativo)', icon: 'ES', color: '#FFD700', level: 100 },
+        { name: 'Inglés (Básico)', icon: 'EN', color: '#002366', level: 40 },
+      ],
+    },
+    {
+      title: 'Intereses',
+      emoji: '🧠',
+      skills: [
+        { name: 'Web Performance', icon: '⚡', color: '#00FF00', level: 90 },
+        { name: 'IA Generativa', icon: '🤖', color: '#8A2BE2', level: 85 },
+        { name: 'Web3', icon: '⛓️', color: '#3C3C3D', level: 75 },
+        { name: 'Full Stack', icon: '💻', color: '#FF1493', level: 95 },
+      ],
+    },
+    {
+      title: 'Arquitectura & Integraciones',
+      emoji: '🏗️',
+      highlight: true,
+      skills: [
+        { name: 'API REST', icon: 'REST', color: '#4CAF50', level: 92 },
+        { name: 'Microservicios', icon: 'MS', color: '#2196F3', level: 85 },
+        { name: 'History API', icon: 'SPA', color: '#FF9800', level: 88 },
+        { name: 'DDD', icon: 'DDD', color: '#9C27B0', level: 80 },
       ],
     },
   ];

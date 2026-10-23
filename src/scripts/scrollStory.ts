@@ -303,6 +303,103 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
     sctx.fillText(done ? '✓ build exitoso   0 errores   60 fps' : 'escribiendo…   TypeScript   UTF-8', 20, H - 13);
     screenTex.needsUpdate = true;
   };
+  /**
+   * Vista final de la pantalla: replica el inicio de la sección "About"
+   * (título + terminal con `cat developer.json`) sobre el mismo fondo que la
+   * página, para que al terminar la animación la sección real aparezca
+   * como si siguiéramos dentro de la laptop.
+   * fw/fh = fracción visible de la pantalla cuando la cámara está pegada a ella.
+   */
+  const PAGE_BG = '#0A0A0A';
+  const TERM_CMD = 'cat developer.json';
+  const TERM_OUT: Segment[] = [
+    ['{', '#A0A0A0'],
+    ['  "name": "Stephano Espinoza Cueva",', '#4ADE80'],
+    ['  "role": "Software Engineer",', '#4ADE80'],
+    ['  "location": "Lima, Perú",', '#4ADE80'],
+  ];
+  const drawTerminal = (p: number, cursorOn: boolean, fw: number, fh: number) => {
+    const cmdChars = Math.floor(range(p, 0.05, 0.55) * TERM_CMD.length);
+    const outLines = Math.floor(range(p, 0.6, 1) * TERM_OUT.length + 0.001);
+    const drawKey = `term|${cmdChars}|${outLines}|${cursorOn}|${fw.toFixed(2)}|${fh.toFixed(2)}`;
+    if (drawKey === lastDrawKey) return;
+    lastDrawKey = drawKey;
+    const W = screenCanvas.width;
+    const H = screenCanvas.height;
+    const rw = W * Math.min(1, fw);
+    const rh = H * Math.min(1, fh);
+    const cx = W / 2;
+    const cy = H / 2;
+    sctx.fillStyle = PAGE_BG;
+    sctx.fillRect(0, 0, W, H);
+
+    // Título como en la sección About
+    const titleSize = Math.min(52, rw * 0.085);
+    sctx.font = `900 ${titleSize}px Inter, system-ui, sans-serif`;
+    sctx.textAlign = 'center';
+    const title = '< ABOUT_ME >';
+    const tw = sctx.measureText(title).width;
+    const grad = sctx.createLinearGradient(cx - tw / 2, 0, cx + tw / 2, 0);
+    grad.addColorStop(0, '#3B82F6');
+    grad.addColorStop(0.5, '#60A5FA');
+    grad.addColorStop(1, '#93C5FD');
+    sctx.fillStyle = grad;
+    const titleY = cy - rh * 0.3;
+    sctx.fillText(title, cx, titleY);
+    sctx.fillStyle = '#3B82F6';
+    sctx.fillRect(cx - rw * 0.08, titleY + titleSize * 0.4, rw * 0.16, Math.max(2, titleSize * 0.06));
+    sctx.textAlign = 'left';
+
+    // Terminal
+    const cardW = rw * 0.86;
+    const cardH = rh * 0.52;
+    const x0 = cx - cardW / 2;
+    const y0 = cy - rh * 0.14;
+    const barH = Math.max(18, cardH * 0.13);
+    sctx.fillStyle = '#111111';
+    sctx.fillRect(x0, y0, cardW, cardH);
+    sctx.strokeStyle = 'rgba(59,130,246,0.25)';
+    sctx.lineWidth = 2;
+    sctx.strokeRect(x0, y0, cardW, cardH);
+    sctx.fillStyle = '#1A1A1A';
+    sctx.fillRect(x0, y0, cardW, barH);
+    ['#ef4444', '#eab308', '#22c55e'].forEach((col, i) => {
+      sctx.fillStyle = col;
+      sctx.beginPath();
+      sctx.arc(x0 + barH * 0.6 + i * barH * 0.55, y0 + barH / 2, barH * 0.16, 0, Math.PI * 2);
+      sctx.fill();
+    });
+    const fs = Math.min(22, cardW * 0.036);
+    sctx.font = `400 ${fs * 0.75}px ${FONT}`;
+    sctx.fillStyle = '#9CA3AF';
+    sctx.textAlign = 'center';
+    sctx.fillText('~/developer/stephano', cx, y0 + barH / 2 + fs * 0.27);
+    sctx.textAlign = 'left';
+
+    sctx.font = `400 ${fs}px ${FONT}`;
+    const tx = x0 + cardW * 0.05;
+    let ty = y0 + barH + fs * 1.8;
+    sctx.fillStyle = '#3B82F6';
+    sctx.fillText('$', tx, ty);
+    const cmd = TERM_CMD.slice(0, cmdChars);
+    sctx.fillStyle = '#D1D5DB';
+    const cmdX = tx + fs * 1.3;
+    sctx.fillText(cmd.slice(0, 3), cmdX, ty);
+    const catW = sctx.measureText(cmd.slice(0, 3)).width;
+    sctx.fillStyle = '#10B981';
+    sctx.fillText(cmd.slice(3), cmdX + catW, ty);
+    if (cursorOn && outLines === 0) {
+      sctx.fillStyle = '#3B82F6';
+      sctx.fillRect(cmdX + sctx.measureText(cmd).width + 3, ty - fs * 0.8, fs * 0.5, fs);
+    }
+    for (let i = 0; i < outLines; i++) {
+      ty += fs * 1.45;
+      sctx.fillStyle = TERM_OUT[i][1];
+      sctx.fillText(TERM_OUT[i][0], tx + fs, ty);
+    }
+    screenTex.needsUpdate = true;
+  };
+
   drawScreen(0, false, false);
   document.fonts?.ready.then(() => {
     lastDrawKey = '';
@@ -547,8 +644,9 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
 
     const a = easeInOut(range(t, 0, 0.28));
     const b = easeInOut(range(t, 0.22, 0.45));
-    const typing = range(t, 0.4, 0.8);
-    const c = easeInOut(range(t, 0.7, 0.98));
+    const typing = range(t, 0.38, 0.64);
+    const c = easeInOut(range(t, 0.62, 0.86));
+    const term = range(t, 0.8, 0.93); // la pantalla se vuelve la sección About
     const done = typing >= 1;
 
     // 1) Escritorio entra girando
@@ -560,7 +658,15 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
     const on = range(t, 0.33, 0.45);
     screenMat.color.setScalar(on);
     const cursorOn = Math.floor(time * 2) % 2 === 0;
-    drawScreen(Math.floor(typing * TOTAL_CHARS), cursorOn && on > 0.5, done);
+    // Distancia a la que la pantalla llena exactamente el viewport
+    const tanHalf = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+    const coverDist = Math.min(1.625 / (2 * tanHalf), 2.6 / (2 * tanHalf * camera.aspect)) * 0.97;
+    if (term > 0) {
+      const visH = 2 * coverDist * tanHalf;
+      drawTerminal(term, cursorOn, (visH * camera.aspect) / 2.6, visH / 1.625);
+    } else {
+      drawScreen(Math.floor(typing * TOTAL_CHARS), cursorOn && on > 0.5, done);
+    }
 
     screen.getWorldPosition(screenCenter);
     screenNormal.set(0, 0, 1).applyQuaternion(screen.getWorldQuaternion(qTmp));
@@ -573,9 +679,9 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
     camPos.y += Math.sin(time * 0.5) * 0.04;
     lookAt.copy(lookStart);
     if (c > 0) {
-      camEnd.copy(screenCenter).addScaledVector(screenNormal, isMobile ? 1.7 : 1.35);
-      const p1 = tmpA.set(0.9, 2.0, 3.1);
-      const p2 = tmpB.set(0.3, 1.45, 1.3);
+      camEnd.copy(screenCenter).addScaledVector(screenNormal, coverDist);
+      const p1 = tmpA.set(0.9, 2.1, 3.2);
+      const p2 = tmpB.set(0.4, 1.8, 2.0);
       const u = c;
       const iu = 1 - u;
       const k0 = iu * iu * iu;
@@ -644,18 +750,19 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
     dust.rotation.y = time * 0.01;
     dust.position.y = Math.sin(time * 0.2) * 0.05;
     dustMat.opacity = 0.35 * (1 - c);
+    screenLight.intensity *= 1 - term;
 
     // UI
     captions.forEach((el, i) => {
-      const start = [-1, 0.32, 0.62][i] ?? 0;
-      const end = [0.3, 0.6, 0.82][i] ?? 1;
+      const start = [-1, 0.3, 0.58][i] ?? 0;
+      const end = [0.28, 0.56, 0.78][i] ?? 1;
       const vis = Math.min(range(t, start, start + 0.06), 1 - range(t, end - 0.06, end));
       el.style.opacity = String(vis);
       el.style.transform = `translateY(${(1 - vis) * 16}px)`;
       el.style.pointerEvents = vis > 0.5 ? 'auto' : 'none';
     });
     if (progressBar) progressBar.style.transform = `scaleX(${t})`;
-    if (fadeOverlay) fadeOverlay.style.opacity = String(range(t, 0.88, 1));
+    if (fadeOverlay) fadeOverlay.style.opacity = String(range(t, 0.94, 1));
 
     renderer.render(scene, camera);
   };

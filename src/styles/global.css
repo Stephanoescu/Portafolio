@@ -10,7 +10,7 @@
     background-color: #0A0A0A;
     color: #F5F5F5;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    overflow-x: hidden;
+    overflow-x: clip; /* "clip" no crea un contenedor de scroll, así position: sticky funciona */
     position: relative;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;

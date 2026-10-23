@@ -165,7 +165,7 @@ const FooterSection = () => {
               <motion.a
                 key={social.name}
                 href={social.url}
-                target="_blank"
+                target={social.url.startsWith('mailto:') ? undefined : '_blank'}
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -230,7 +230,13 @@ const FooterSection = () => {
 
                 {/* Indicador de link */}
                 <div className="flex items-center gap-2 text-sm text-gray-400 group-hover:text-accent-blue transition-colors">
-                  <span>Visitar perfil</span>
+                  <span>
+                    {social.name === 'Email'
+                      ? 'Enviar correo'
+                      : social.name === 'WhatsApp'
+                        ? 'Escribir por WhatsApp'
+                        : 'Visitar perfil'}
+                  </span>
                   <motion.svg
                     className="w-4 h-4"
                     fill="none"

@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import HeroSection from '../components/HeroSection';
+import ScrollStory from '../components/ScrollStory';
 import AboutSection from '../components/AboutSection';
 import SkillsSection from '../components/SkillsSection';
 import ProjectsSection from '../components/ProjectsSection';
@@ -10,6 +11,9 @@ import FooterSection from '../components/FooterSection';
 <Layout title="Stephano Espinoza Cueva - Software Engineer | Full Stack Developer">
   <!-- Hero Section -->
   <HeroSection client:load />
+
+  <!-- Escena 3D con scroll: monito programando -->
+  <ScrollStory client:visible />
   
   <!-- About Section -->
   <AboutSection client:load />

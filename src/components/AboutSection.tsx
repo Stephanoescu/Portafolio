@@ -164,12 +164,12 @@ const AboutSection = () => {
                 <div className="text-xs text-gray-400 font-mono">Años de estudio</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-accent-green">6+</div>
+                <div className="text-2xl font-bold text-accent-green">5</div>
                 <div className="text-xs text-gray-400 font-mono">Proyectos destacados</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-accent-blue">∞</div>
-                <div className="text-xs text-gray-400 font-mono">Líneas de código</div>
+                <div className="text-2xl font-bold text-accent-blue">1er 🏆</div>
+                <div className="text-xs text-gray-400 font-mono">Game Jam UPC 2022</div>
               </div>
               <div>
                 <div className="text-2xl font-bold gradient-text">60 FPS</div>

@@ -177,7 +177,7 @@ const SkillsSection = () => {
             <span className="gradient-text">ARSENAL TECNOLÓGICO</span>
           </h2>
           <p className="text-xl text-gray-400 font-mono">
-            {'>'} Las herramientas que dominó para crear experiencias extraordinarias_
+            {'>'} Las herramientas que domino para crear experiencias extraordinarias_
           </p>
           <div className="w-32 h-1 bg-gradient-to-r from-accent-blue via-blue-400 to-accent-blue mx-auto mt-6"></div>
         </motion.div>

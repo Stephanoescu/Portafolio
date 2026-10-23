@@ -16,14 +16,6 @@ const HeroSection = () => (
         Transformo ideas en código limpio y escalable. Me obsesiona la optimización: cada interfaz que construyo
         apunta a 60 FPS.
       </p>
-      <div className="hero__actions">
-        <a className="btn btn--primary" href="#projects">
-          Ver proyectos
-        </a>
-        <a className="btn" href="#contact">
-          Contactar
-        </a>
-      </div>
       <a className="hero__hint" href="#story">
         Baja para entrar a la laptop
       </a>

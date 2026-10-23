@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const captions = [
   {
@@ -79,11 +79,17 @@ const ScrollStory = () => {
                 style={{ opacity: i === 0 ? 1 : 0, willChange: 'opacity, transform' }}
               >
                 <div className="glass rounded-2xl p-6 md:bg-transparent md:p-0 md:backdrop-blur-none md:border-0">
-                  <span className="font-mono text-sm text-accent-green">{c.tag}</span>
-                  <h2 className="mt-2 text-2xl font-black leading-tight text-text-primary sm:text-3xl md:text-5xl">
+                  <span className="inline-flex items-center gap-2.5 font-mono text-[13px] tracking-wide text-zinc-400">
+                    <span className="h-px w-6 bg-zinc-600" aria-hidden="true" />
+                    {c.tag}
+                  </span>
+                  <h2
+                    className="mt-3 text-2xl font-semibold leading-tight tracking-tight text-zinc-100 sm:text-3xl md:text-[44px] md:leading-[1.1]"
+                    style={{ textWrap: 'balance' } as React.CSSProperties}
+                  >
                     {c.title}
                   </h2>
-                  <p className="mt-3 text-base text-text-secondary md:text-lg">{c.body}</p>
+                  <p className="mt-3.5 text-[15px] leading-relaxed text-zinc-400 md:text-[17px]">{c.body}</p>
                 </div>
               </div>
             ))}
@@ -91,10 +97,10 @@ const ScrollStory = () => {
         </div>
 
         {/* Barra de progreso */}
-        <div className="absolute bottom-8 left-1/2 h-1 w-40 -translate-x-1/2 overflow-hidden rounded-full bg-white/10">
+        <div className="absolute bottom-8 left-1/2 h-0.5 w-40 -translate-x-1/2 overflow-hidden rounded-full bg-white/10">
           <div
             ref={progressRef}
-            className="h-full w-full origin-left bg-gradient-to-r from-accent-blue to-accent-green"
+            className="h-full w-full origin-left bg-white/75"
             style={{ transform: 'scaleX(0)' }}
           />
         </div>

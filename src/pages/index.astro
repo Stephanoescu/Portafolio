@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import HeroSection from '../components/HeroSection';
+import ScrollStory from '../components/ScrollStory';
+import InsideScreen from '../components/InsideScreen';
 import AboutSection from '../components/AboutSection';
 import SkillsSection from '../components/SkillsSection';
 import ProjectsSection from '../components/ProjectsSection';
@@ -8,18 +10,17 @@ import FooterSection from '../components/FooterSection';
 ---
 
 <Layout title="Stephano Espinoza Cueva - Software Engineer | Full Stack Developer">
-  <!-- Hero Section -->
-  <HeroSection client:load />
-  
-  <!-- About Section -->
-  <AboutSection client:load />
-  
-  <!-- Skills Section -->
-  <SkillsSection client:load />
-  
-  <!-- Projects Section -->
-  <ProjectsSection client:load />
-  
-  <!-- Footer & Contact Section -->
-  <FooterSection client:load />
+  <!-- Portada (HTML estático, sin JavaScript) -->
+  <HeroSection />
+
+  <!-- Escena 3D con scroll: el monito programa y la cámara entra a la laptop -->
+  <ScrollStory client:visible />
+
+  <!-- Todo lo que sigue vive dentro de la pantalla de la laptop -->
+  <InsideScreen client:load>
+    <AboutSection />
+    <SkillsSection />
+    <ProjectsSection />
+    <FooterSection />
+  </InsideScreen>
 </Layout>

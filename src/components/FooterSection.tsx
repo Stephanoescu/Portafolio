@@ -2,7 +2,7 @@ const EMAIL = 'Stephanoescu@gmail.com';
 
 const socials = [
   { name: 'GitHub', handle: '@Stephanoescu', url: 'https://github.com/Stephanoescu' },
-  { name: 'LinkedIn', handle: '/in/stephano-espinoza-cueva', url: 'https://linkedin.com/in/stephano-espinoza-cueva' },
+  { name: 'LinkedIn', handle: '/in/stephano-espinoza-cueva', url: 'https://www.linkedin.com/in/stephano-espinoza-cueva-7755a7304/' },
   { name: 'WhatsApp', handle: '+51 988 777 567', url: 'https://wa.me/51988777567' },
 ];
 

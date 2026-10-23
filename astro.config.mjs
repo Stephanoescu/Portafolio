@@ -12,10 +12,5 @@ export default defineConfig({
   output: 'static',
   build: {
     inlineStylesheets: 'auto'
-  },
-  vite: {
-    ssr: {
-      noExternal: ['framer-motion']
-    }
   }
 });

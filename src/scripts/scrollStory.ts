@@ -3,6 +3,20 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import {
+  ABOUT_EYEBROW,
+  ABOUT_TITLE,
+  ABOUT_TITLE_MAX,
+  BAR_H,
+  COLORS,
+  CONTENT_MAX,
+  TABS,
+  bezelFor,
+  firstSectionTopFor,
+  isNarrow,
+  padFor,
+  titleSizeFor,
+} from './insideLayout';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +32,6 @@ export interface ScrollStoryOptions {
   canvasHost: HTMLElement;
   captions?: HTMLElement[];
   progressBar?: HTMLElement | null;
-  fadeOverlay?: HTMLElement | null;
 }
 
 type Segment = [string, string];
@@ -84,7 +97,7 @@ function makeFurTexture(): THREE.CanvasTexture {
 }
 
 export function initScrollStory(opts: ScrollStoryOptions): () => void {
-  const { section, canvasHost, captions = [], progressBar, fadeOverlay } = opts;
+  const { section, canvasHost, captions = [], progressBar } = opts;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = window.matchMedia('(max-width: 767px)').matches;
   const useShadows = !isMobile;
@@ -236,8 +249,8 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
 
   // Pantalla: editor de código dibujado en un canvas
   const screenCanvas = document.createElement('canvas');
-  screenCanvas.width = 1024;
-  screenCanvas.height = 640;
+  screenCanvas.width = isMobile ? 1024 : 1536;
+  screenCanvas.height = isMobile ? 640 : 960;
   const sctx = screenCanvas.getContext('2d')!;
   const screenTex = track(new THREE.CanvasTexture(screenCanvas));
   screenTex.colorSpace = THREE.SRGBColorSpace;
@@ -251,8 +264,10 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
     const drawKey = `${chars}|${cursorOn}|${done}`;
     if (drawKey === lastDrawKey) return;
     lastDrawKey = drawKey;
-    const W = screenCanvas.width;
-    const H = screenCanvas.height;
+    // El editor se diseña en 1024×640 y se escala al tamaño real del canvas
+    const W = 1024;
+    const H = 640;
+    sctx.setTransform(screenCanvas.width / W, 0, 0, screenCanvas.width / W, 0, 0);
     sctx.fillStyle = C.bg;
     sctx.fillRect(0, 0, W, H);
     sctx.fillStyle = C.bar;
@@ -301,102 +316,125 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
     sctx.font = `400 17px ${FONT}`;
     sctx.fillStyle = done ? C.str : C.muted;
     sctx.fillText(done ? '✓ build exitoso   0 errores   60 fps' : 'escribiendo…   TypeScript   UTF-8', 20, H - 13);
+    sctx.setTransform(1, 0, 0, 1, 0, 0);
     screenTex.needsUpdate = true;
   };
   /**
-   * Vista final de la pantalla: replica el inicio de la sección "About"
-   * (título + terminal con `cat developer.json`) sobre el mismo fondo que la
-   * página, para que al terminar la animación la sección real aparezca
-   * como si siguiéramos dentro de la laptop.
-   * fw/fh = fracción visible de la pantalla cuando la cámara está pegada a ella.
+   * Vista final: la pantalla 3D muestra el mismo marco (bisel + barra con
+   * pestañas) y el inicio de "Sobre mí" que el sitio real, con las mismas
+   * medidas (src/scripts/insideLayout.ts). Así, cuando el contenido real
+   * aparece encima, no se nota el cambio: seguimos "dentro" de la laptop.
+   * fw/fh = fracción de la pantalla visible cuando la cámara está pegada a ella.
    */
-  const PAGE_BG = '#0A0A0A';
-  const TERM_CMD = 'cat developer.json';
-  const TERM_OUT: Segment[] = [
-    ['{', '#A0A0A0'],
-    ['  "name": "Stephano Espinoza Cueva",', '#4ADE80'],
-    ['  "role": "Software Engineer",', '#4ADE80'],
-    ['  "location": "Lima, Perú",', '#4ADE80'],
-  ];
-  const drawTerminal = (p: number, cursorOn: boolean, fw: number, fh: number) => {
-    const cmdChars = Math.floor(range(p, 0.05, 0.55) * TERM_CMD.length);
-    const outLines = Math.floor(range(p, 0.6, 1) * TERM_OUT.length + 0.001);
-    const drawKey = `term|${cmdChars}|${outLines}|${cursorOn}|${fw.toFixed(2)}|${fh.toFixed(2)}`;
+  const setSpacing = (v: string) => {
+    if ('letterSpacing' in sctx) (sctx as CanvasRenderingContext2D & { letterSpacing: string }).letterSpacing = v;
+  };
+  const wrapLines = (text: string, maxW: number) => {
+    const words = text.split(' ');
+    const lines: string[] = [];
+    let line = '';
+    for (const w of words) {
+      const test = line ? `${line} ${w}` : w;
+      if (sctx.measureText(test).width > maxW && line) {
+        lines.push(line);
+        line = w;
+      } else line = test;
+    }
+    if (line) lines.push(line);
+    return lines;
+  };
+  const drawInside = (p: number, fw: number, fh: number) => {
+    const vw = width;
+    const vh = height;
+    const drawKey = `inside|${Math.round(p * 20)}|${fw.toFixed(3)}|${fh.toFixed(3)}|${vw}x${vh}`;
     if (drawKey === lastDrawKey) return;
+    lastDrawKey = '';
+    drawScreen(TOTAL_CHARS, false, true); // de fondo: el editor terminado
     lastDrawKey = drawKey;
-    const W = screenCanvas.width;
-    const H = screenCanvas.height;
-    const rw = W * Math.min(1, fw);
-    const rh = H * Math.min(1, fh);
-    const cx = W / 2;
-    const cy = H / 2;
-    sctx.fillStyle = PAGE_BG;
-    sctx.fillRect(0, 0, W, H);
 
-    // Título como en la sección About
-    const titleSize = Math.min(52, rw * 0.085);
-    sctx.font = `900 ${titleSize}px Inter, system-ui, sans-serif`;
-    sctx.textAlign = 'center';
-    const title = '< ABOUT_ME >';
-    const tw = sctx.measureText(title).width;
-    const grad = sctx.createLinearGradient(cx - tw / 2, 0, cx + tw / 2, 0);
-    grad.addColorStop(0, '#3B82F6');
-    grad.addColorStop(0.5, '#60A5FA');
-    grad.addColorStop(1, '#93C5FD');
-    sctx.fillStyle = grad;
-    const titleY = cy - rh * 0.3;
-    sctx.fillText(title, cx, titleY);
-    sctx.fillStyle = '#3B82F6';
-    sctx.fillRect(cx - rw * 0.08, titleY + titleSize * 0.4, rw * 0.16, Math.max(2, titleSize * 0.06));
-    sctx.textAlign = 'left';
+    const CW = screenCanvas.width;
+    const CH = screenCanvas.height;
+    const k = (CW * fw) / vw; // px del canvas por px CSS
+    const ox = (CW - CW * fw) / 2;
+    const oy = (CH - CH * fh) / 2;
+    const B = bezelFor(vw);
+    const pad = padFor(vw);
+    const narrow = isNarrow(vw);
 
-    // Terminal
-    const cardW = rw * 0.86;
-    const cardH = rh * 0.52;
-    const x0 = cx - cardW / 2;
-    const y0 = cy - rh * 0.14;
-    const barH = Math.max(18, cardH * 0.13);
-    sctx.fillStyle = '#111111';
-    sctx.fillRect(x0, y0, cardW, cardH);
-    sctx.strokeStyle = 'rgba(59,130,246,0.25)';
-    sctx.lineWidth = 2;
-    sctx.strokeRect(x0, y0, cardW, cardH);
-    sctx.fillStyle = '#1A1A1A';
-    sctx.fillRect(x0, y0, cardW, barH);
-    ['#ef4444', '#eab308', '#22c55e'].forEach((col, i) => {
-      sctx.fillStyle = col;
-      sctx.beginPath();
-      sctx.arc(x0 + barH * 0.6 + i * barH * 0.55, y0 + barH / 2, barH * 0.16, 0, Math.PI * 2);
-      sctx.fill();
+    sctx.save();
+    sctx.globalAlpha = easeOut(p);
+    sctx.fillStyle = COLORS.bezel;
+    sctx.fillRect(0, 0, CW, CH);
+    sctx.setTransform(k, 0, 0, k, ox, oy); // desde aquí se dibuja en px CSS
+
+    // Vidrio de la pantalla
+    sctx.fillStyle = COLORS.bg;
+    sctx.beginPath();
+    sctx.roundRect(B, B, vw - 2 * B, vh - 2 * B, 12);
+    sctx.fill();
+
+    // Barra de la ventana
+    sctx.fillStyle = COLORS.bar;
+    sctx.beginPath();
+    sctx.roundRect(B, B, vw - 2 * B, BAR_H, [12, 12, 0, 0]);
+    sctx.fill();
+    sctx.fillStyle = COLORS.line;
+    sctx.fillRect(B, B + BAR_H - 1, vw - 2 * B, 1);
+    let x = B + (narrow ? 10 : 16);
+    const midY = B + BAR_H / 2;
+    if (!narrow) {
+      for (let i = 0; i < 3; i++) {
+        sctx.fillStyle = COLORS.dot;
+        sctx.beginPath();
+        sctx.arc(x + 5 + i * 17, midY, 5, 0, Math.PI * 2);
+        sctx.fill();
+      }
+      x += 44 + 18;
+    }
+    sctx.font = '400 13px Geist, system-ui, sans-serif';
+    sctx.textBaseline = 'middle';
+    TABS.forEach((tab, i) => {
+      const tw = sctx.measureText(tab.label).width + (narrow ? 20 : 24);
+      if (i === 0) {
+        sctx.fillStyle = '#1a1a1d';
+        sctx.beginPath();
+        sctx.roundRect(x, midY - 15, tw, 30, 7);
+        sctx.fill();
+      }
+      sctx.fillStyle = i === 0 ? COLORS.text : COLORS.faint;
+      sctx.fillText(tab.label, x + (narrow ? 10 : 12), midY + 0.5);
+      x += tw + 2;
     });
-    const fs = Math.min(22, cardW * 0.036);
-    sctx.font = `400 ${fs * 0.75}px ${FONT}`;
-    sctx.fillStyle = '#9CA3AF';
-    sctx.textAlign = 'center';
-    sctx.fillText('~/developer/stephano', cx, y0 + barH / 2 + fs * 0.27);
+    sctx.font = '400 12px "Geist Mono", ui-monospace, monospace';
+    sctx.textAlign = 'right';
+    sctx.fillStyle = '#7fb48c';
+    sctx.fillText('60 fps', vw - B - (narrow ? 10 : 16), midY);
+    if (!narrow) {
+      const fpsW = sctx.measureText('60 fps').width;
+      sctx.fillStyle = COLORS.faint;
+      sctx.fillText('stephano.dev', vw - B - 16 - fpsW - 14, midY);
+    }
     sctx.textAlign = 'left';
 
-    sctx.font = `400 ${fs}px ${FONT}`;
-    const tx = x0 + cardW * 0.05;
-    let ty = y0 + barH + fs * 1.8;
-    sctx.fillStyle = '#3B82F6';
-    sctx.fillText('$', tx, ty);
-    const cmd = TERM_CMD.slice(0, cmdChars);
-    sctx.fillStyle = '#D1D5DB';
-    const cmdX = tx + fs * 1.3;
-    sctx.fillText(cmd.slice(0, 3), cmdX, ty);
-    const catW = sctx.measureText(cmd.slice(0, 3)).width;
-    sctx.fillStyle = '#10B981';
-    sctx.fillText(cmd.slice(3), cmdX + catW, ty);
-    if (cursorOn && outLines === 0) {
-      sctx.fillStyle = '#3B82F6';
-      sctx.fillRect(cmdX + sctx.measureText(cmd).width + 3, ty - fs * 0.8, fs * 0.5, fs);
-    }
-    for (let i = 0; i < outLines; i++) {
-      ty += fs * 1.45;
-      sctx.fillStyle = TERM_OUT[i][1];
-      sctx.fillText(TERM_OUT[i][0], tx + fs, ty);
-    }
+    // Inicio de "Sobre mí"
+    const left = B + Math.max(0, (vw - 2 * B - CONTENT_MAX) / 2) + pad;
+    const eyebrowTop = B + BAR_H + firstSectionTopFor(vw);
+    sctx.textBaseline = 'alphabetic';
+    sctx.font = '400 12px "Geist Mono", ui-monospace, monospace';
+    setSpacing('0.96px');
+    sctx.fillStyle = COLORS.faint;
+    sctx.fillText(ABOUT_EYEBROW.toUpperCase(), left, eyebrowTop + 12);
+    const ts = titleSizeFor(vw);
+    sctx.font = `600 ${ts}px Geist, system-ui, sans-serif`;
+    setSpacing(`${-0.03 * ts}px`);
+    sctx.fillStyle = COLORS.text;
+    const maxW = Math.min(ABOUT_TITLE_MAX, vw - 2 * B - 2 * pad);
+    const lineH = ts * 1.1;
+    wrapLines(ABOUT_TITLE, maxW).forEach((line, i) => {
+      sctx.fillText(line, left, eyebrowTop + 32 + i * lineH + ts * 0.86);
+    });
+    setSpacing('0px');
+    sctx.restore();
     screenTex.needsUpdate = true;
   };
 
@@ -636,6 +674,7 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
   let running = false;
   let time = 0;
 
+  let diving = false;
   const frame = () => {
     raf = requestAnimationFrame(frame);
     const dt = Math.min(clock.getDelta(), 0.05);
@@ -648,6 +687,11 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
     const c = easeInOut(range(t, 0.62, 0.86));
     const term = range(t, 0.8, 0.93); // la pantalla se vuelve la sección About
     const done = typing >= 1;
+    // Avisar a la barra de navegación para que no tape la entrada a la pantalla
+    if (c > 0.2 !== diving) {
+      diving = c > 0.2;
+      window.dispatchEvent(new CustomEvent('story-dive', { detail: diving }));
+    }
 
     // 1) Escritorio entra girando
     desk.rotation.y = lerp(-0.95, 0, a);
@@ -663,7 +707,7 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
     const coverDist = Math.min(1.625 / (2 * tanHalf), 2.6 / (2 * tanHalf * camera.aspect)) * 0.97;
     if (term > 0) {
       const visH = 2 * coverDist * tanHalf;
-      drawTerminal(term, cursorOn, (visH * camera.aspect) / 2.6, visH / 1.625);
+      drawInside(term, (visH * camera.aspect) / 2.6, visH / 1.625);
     } else {
       drawScreen(Math.floor(typing * TOTAL_CHARS), cursorOn && on > 0.5, done);
     }
@@ -762,7 +806,6 @@ export function initScrollStory(opts: ScrollStoryOptions): () => void {
       el.style.pointerEvents = vis > 0.5 ? 'auto' : 'none';
     });
     if (progressBar) progressBar.style.transform = `scaleX(${t})`;
-    if (fadeOverlay) fadeOverlay.style.opacity = String(range(t, 0.94, 1));
 
     renderer.render(scene, camera);
   };
